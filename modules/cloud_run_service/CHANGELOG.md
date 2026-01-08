@@ -2,7 +2,7 @@
 
 All notable changes to this module will be documented in this file.
 
-## [Unreleased]
+## [Commit: 13e32d9] - 2026-01-08
 
 ### Added
 - Resource limits configuration (CPU and memory)

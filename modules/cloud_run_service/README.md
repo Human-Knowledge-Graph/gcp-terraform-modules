@@ -21,7 +21,7 @@ Reference this module using a Git commit hash for version control:
 ```hcl
 module "cloud_run_service" {
   # Pin to specific commit - check CHANGELOG.md for latest stable commits
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=5ef090f"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=13e32d9"
 
   project_id             = "my-gcp-project"
   region                 = "us-central1"
@@ -45,7 +45,7 @@ module "cloud_run_service" {
 
 ```hcl
 module "web_app" {
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=5ef090f"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=13e32d9"
 
   project_id             = "my-gcp-project"
   region                 = "us-central1"
@@ -71,7 +71,7 @@ output "app_url" {
 
 ```hcl
 module "api_service" {
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=5ef090f"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=13e32d9"
 
   project_id             = "my-gcp-project"
   region                 = "us-west1"
@@ -95,7 +95,7 @@ module "api_service" {
 
 ```hcl
 module "backend_service" {
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=5ef090f"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=13e32d9"
 
   project_id             = var.project_id
   region                 = "europe-west1"
@@ -122,7 +122,7 @@ module "backend_service" {
 
 ```hcl
 module "production_api" {
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=5ef090f"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=13e32d9"
 
   project_id             = "my-gcp-project"
   region                 = "us-central1"
@@ -156,7 +156,7 @@ module "production_api" {
 
 ```hcl
 module "internal_service" {
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=5ef090f"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=13e32d9"
 
   project_id             = "my-gcp-project"
   region                 = "us-east1"
@@ -188,7 +188,7 @@ module "internal_service" {
 
 ```hcl
 module "high_performance_api" {
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=5ef090f"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=13e32d9"
 
   project_id             = "my-gcp-project"
   region                 = "us-west1"
@@ -234,7 +234,7 @@ module "static_ip" {
 
 # Deploy Cloud Run service
 module "service" {
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=5ef090f"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=13e32d9"
 
   project_id             = var.project_id
   region                 = "us-central1"
@@ -253,7 +253,7 @@ module "service" {
 
 ```hcl
 module "api" {
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=5ef090f"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=13e32d9"
 
   project_id             = var.project_id
   region                 = var.region
