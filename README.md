@@ -18,6 +18,10 @@ This repository contains production-ready Terraform modules designed to simplify
 
 - **[static_ip](./modules/static_ip)** - Create static IP addresses (regional or global, internal or external)
 
+### Serverless
+
+- **[cloud_run_service](./modules/cloud_run_service)** - Deploy containerized applications to Cloud Run with IAM controls
+
 ### Security
 
 - **[single_secret](./modules/single_secret)** - Create Secret Manager secret with IAM access permissions
