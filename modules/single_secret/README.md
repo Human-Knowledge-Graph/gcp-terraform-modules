@@ -15,7 +15,7 @@ Reference this module using a Git commit hash for version control:
 ```hcl
 module "single_secret" {
   # Pin to specific commit - check CHANGELOG.md for latest stable commits
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/single_secret?ref=COMMIT_HASH"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/single_secret?ref=0b74c7b"
 
   secret_id = "my-application-secret"
 
@@ -32,7 +32,7 @@ module "single_secret" {
 
 ```hcl
 module "api_key_secret" {
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/single_secret?ref=COMMIT_HASH"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/single_secret?ref=0b74c7b"
 
   secret_id = "api-key"
 
@@ -72,7 +72,7 @@ resource "google_cloud_run_service" "app" {
 
 ```hcl
 module "database_password" {
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/single_secret?ref=COMMIT_HASH"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/single_secret?ref=0b74c7b"
 
   secret_id = "database-password"
 
@@ -88,7 +88,7 @@ module "database_password" {
 
 ```hcl
 module "secret_only" {
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/single_secret?ref=COMMIT_HASH"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/single_secret?ref=0b74c7b"
 
   secret_id = "my-secret"
 
@@ -101,7 +101,7 @@ module "secret_only" {
 
 ```hcl
 module "app_secret" {
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/single_secret?ref=COMMIT_HASH"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/single_secret?ref=0b74c7b"
 
   secret_id = "app-config"
 
@@ -178,7 +178,7 @@ After creating the secret with this module, add versions:
 ```hcl
 # Create the secret structure
 module "my_secret" {
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/single_secret?ref=COMMIT_HASH"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/single_secret?ref=0b74c7b"
 
   secret_id = "my-secret"
 
