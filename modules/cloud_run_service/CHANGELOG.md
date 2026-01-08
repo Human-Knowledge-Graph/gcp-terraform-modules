@@ -2,6 +2,21 @@
 
 All notable changes to this module will be documented in this file.
 
+## [Unreleased]
+
+### Added
+- Resource limits configuration (CPU and memory)
+- Autoscaling controls (min/max instances)
+- Custom service account support
+- Ingress controls (all, internal, internal-and-cloud-load-balancing)
+- Request timeout configuration
+- Container concurrency configuration
+- Custom container port support
+- Traffic routing with latest revision support
+
+### Changed
+- Enhanced module with production-ready configuration options
+
 ## [Commit: 5ef090f] - 2026-01-08
 
 ### Added

@@ -7,7 +7,12 @@ This module creates a Google Cloud Run service with container deployment and con
 - Deploy containerized applications to Cloud Run
 - Configure environment variables dynamically
 - Control access with IAM bindings for service invokers
-- Supports custom regions and service names
+- Configure resource limits (CPU and memory)
+- Autoscaling with min/max instance controls
+- Custom service accounts for security
+- Ingress controls (public, internal, or load balancer only)
+- Request timeout and concurrency configuration
+- Custom container port support
 
 ## Usage
 
@@ -113,6 +118,108 @@ module "backend_service" {
 }
 ```
 
+### Production Service with Resource Limits and Autoscaling
+
+```hcl
+module "production_api" {
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=5ef090f"
+
+  project_id             = "my-gcp-project"
+  region                 = "us-central1"
+  cloud_run_service_name = "production-api"
+  image                  = "gcr.io/my-project/api:v2.0.0"
+
+  # Resource limits
+  cpu_limit    = "2000m"  # 2 vCPUs
+  memory_limit = "1Gi"    # 1GB RAM
+
+  # Autoscaling
+  min_instances = "1"    # Always keep 1 instance warm (reduces cold starts)
+  max_instances = "50"   # Scale up to 50 instances under load
+
+  # Concurrency and timeout
+  container_concurrency = 100
+  timeout_seconds       = 60
+
+  # Custom service account for security
+  service_account_email = "api-service@my-project.iam.gserviceaccount.com"
+
+  env_vars = {
+    ENVIRONMENT = "production"
+  }
+
+  allowed_invoker_members = ["allUsers"]
+}
+```
+
+### Internal-Only Service with Load Balancer Access
+
+```hcl
+module "internal_service" {
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=5ef090f"
+
+  project_id             = "my-gcp-project"
+  region                 = "us-east1"
+  cloud_run_service_name = "internal-backend"
+  image                  = "gcr.io/my-project/backend:latest"
+
+  # Restrict ingress to internal traffic and Cloud Load Balancing
+  ingress = "internal-and-cloud-load-balancing"
+
+  # Lightweight service
+  cpu_limit    = "1000m"
+  memory_limit = "256Mi"
+
+  # Scale to zero when not in use
+  min_instances = "0"
+  max_instances = "10"
+
+  env_vars = {
+    INTERNAL = "true"
+  }
+
+  allowed_invoker_members = [
+    "serviceAccount:frontend@my-project.iam.gserviceaccount.com"
+  ]
+}
+```
+
+### High-Performance Service
+
+```hcl
+module "high_performance_api" {
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=5ef090f"
+
+  project_id             = "my-gcp-project"
+  region                 = "us-west1"
+  cloud_run_service_name = "fast-api"
+  image                  = "gcr.io/my-project/fast-api:latest"
+
+  # Maximum resources
+  cpu_limit    = "4000m"  # 4 vCPUs
+  memory_limit = "4Gi"    # 4GB RAM
+
+  # High concurrency
+  container_concurrency = 250
+
+  # Always keep instances warm
+  min_instances = "5"
+  max_instances = "100"
+
+  # Custom port
+  container_port = 3000
+
+  # Longer timeout for complex operations
+  timeout_seconds = 600
+
+  env_vars = {
+    NODE_ENV = "production"
+  }
+
+  allowed_invoker_members = ["allUsers"]
+}
+```
+
 ### Using with Static IP
 
 ```hcl
@@ -195,6 +302,15 @@ output "service_id" {
 | image | Container image location | `string` | n/a | yes |
 | env_vars | Environment variables as pairs of key, values | `map(string)` | n/a | yes |
 | allowed_invoker_members | List of members allowed to invoke the Cloud Run service | `list(string)` | n/a | yes |
+| service_account_email | Service account email to run the Cloud Run service as | `string` | `null` | no |
+| cpu_limit | CPU limit for the container (e.g., '1000m' for 1 vCPU) | `string` | `"1000m"` | no |
+| memory_limit | Memory limit for the container (e.g., '256Mi', '512Mi', '1Gi') | `string` | `"512Mi"` | no |
+| container_port | Port that the container listens on | `number` | `8080` | no |
+| timeout_seconds | Maximum duration in seconds for each request | `number` | `300` | no |
+| container_concurrency | Maximum number of concurrent requests per container instance | `number` | `80` | no |
+| min_instances | Minimum number of container instances to keep running | `string` | `"0"` | no |
+| max_instances | Maximum number of container instances to scale to | `string` | `"100"` | no |
+| ingress | Ingress settings: 'all', 'internal', or 'internal-and-cloud-load-balancing' | `string` | `"all"` | no |
 
 ## Outputs
 

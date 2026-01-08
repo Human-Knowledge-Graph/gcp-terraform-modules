@@ -2,11 +2,32 @@ resource "google_cloud_run_service" "default" {
   name     = var.cloud_run_service_name
   location = var.region
 
-
   template {
+    metadata {
+      annotations = {
+        "autoscaling.knative.dev/minScale" = var.min_instances
+        "autoscaling.knative.dev/maxScale" = var.max_instances
+      }
+    }
+
     spec {
+      service_account_name  = var.service_account_email
+      container_concurrency = var.container_concurrency
+      timeout_seconds       = var.timeout_seconds
+
       containers {
         image = var.image
+
+        ports {
+          container_port = var.container_port
+        }
+
+        resources {
+          limits = {
+            cpu    = var.cpu_limit
+            memory = var.memory_limit
+          }
+        }
 
         dynamic "env" {
           for_each = var.env_vars
@@ -16,8 +37,17 @@ resource "google_cloud_run_service" "default" {
           }
         }
       }
+    }
+  }
 
+  traffic {
+    percent         = 100
+    latest_revision = true
+  }
 
+  metadata {
+    annotations = {
+      "run.googleapis.com/ingress" = var.ingress
     }
   }
 }
