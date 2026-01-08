@@ -23,7 +23,7 @@ Reference modules directly from this repository using Git commit hashes:
 ```hcl
 module "static_ip" {
   # Pin to specific commit for stability
-  source = "git::https://github.com/knaph/gcp-terraform-modules.git//modules/static_ip?ref=abc123d"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/static_ip?ref=efa9048"
 
   project_id = "my-gcp-project"
   name       = "my-app-ip"
@@ -52,21 +52,21 @@ This repository uses **commit-based versioning** where each module is versioned 
 # Pinned to specific commit (recommended for production)
 # Each module can be at a different commit
 module "static_ip" {
-  source = "git::https://github.com/knaph/gcp-terraform-modules.git//modules/static_ip?ref=abc123d"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/static_ip?ref=efa9048"
 }
 
 module "vpc" {
-  source = "git::https://github.com/knaph/gcp-terraform-modules.git//modules/vpc?ref=xyz789a"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/vpc?ref=xyz789a"
 }
 
 # Using latest from main branch (development/testing only)
-source = "git::https://github.com/knaph/gcp-terraform-modules.git//modules/static_ip?ref=main"
+source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/static_ip?ref=main"
 
 # Local development
 source = "../gcp-terraform-modules/modules/static_ip"
 
 # SSH authentication (for private repos)
-source = "git::ssh://git@github.com/knaph/gcp-terraform-modules.git//modules/static_ip?ref=abc123d"
+source = "git::ssh://git@github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/static_ip?ref=efa9048"
 ```
 
 **Best practices:**

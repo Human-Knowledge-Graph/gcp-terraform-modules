@@ -116,7 +116,7 @@ BREAKING CHANGE: Detailed explanation of what broke"
 # In your Terraform infrastructure code
 module "static_ip" {
   # Pin to specific commit for stability
-  source = "git::https://github.com/knaph/gcp-terraform-modules.git//modules/static_ip?ref=abc123d"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/static_ip?ref=abc123d"
 
   project_id = var.project_id
   name       = "my-app-ip"
@@ -125,7 +125,7 @@ module "static_ip" {
 
 # Each module can be at a different commit
 module "vpc" {
-  source = "git::https://github.com/knaph/gcp-terraform-modules.git//modules/vpc?ref=xyz789a"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/vpc?ref=xyz789a"
 
   # ...
 }
@@ -141,7 +141,7 @@ Browse to `modules/<module_name>/CHANGELOG.md` on GitHub or locally to see docum
 
 ```bash
 # Clone the repo
-git clone https://github.com/knaph/gcp-terraform-modules.git
+git clone https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git
 cd gcp-terraform-modules
 
 # View recent commits for a specific module
@@ -211,7 +211,7 @@ module "static_ip" {
   # Version: Commit def456a from 2026-01-10
   # Includes: IPv6 support, bug fixes
   # Last updated: 2026-01-15
-  source = "git::https://github.com/knaph/gcp-terraform-modules.git//modules/static_ip?ref=def456a"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/static_ip?ref=def456a"
 
   project_id = var.project_id
   name       = "my-app-ip"
@@ -227,17 +227,17 @@ module "static_ip" {
 
 module "static_ip" {
   # Latest version with IPv6
-  source = "git::https://github.com/knaph/gcp-terraform-modules.git//modules/static_ip?ref=abc123d"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/static_ip?ref=abc123d"
 }
 
 module "vpc" {
   # Older stable version, no need to update yet
-  source = "git::https://github.com/knaph/gcp-terraform-modules.git//modules/vpc?ref=xyz789a"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/vpc?ref=xyz789a"
 }
 
 module "gke_cluster" {
   # Beta version being tested
-  source = "git::https://github.com/knaph/gcp-terraform-modules.git//modules/gke_cluster?ref=testing123"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/gke_cluster?ref=testing123"
 }
 ```
 

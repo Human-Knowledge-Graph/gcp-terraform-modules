@@ -2,7 +2,7 @@
 
 All notable changes to this module will be documented in this file.
 
-## [Unreleased]
+## [Commit: efa9048] - 2026-01-08
 
 ### Added
 - Initial release of static_ip module
@@ -12,15 +12,20 @@ All notable changes to this module will be documented in this file.
 - Labels and descriptions support
 
 <!--
-## [Commit: abc123def] - 2026-01-08
+Template for future updates:
+
+## [Commit: HASH] - YYYY-MM-DD
 
 ### Added
-- IPv6 support
+- New features
 
 ### Changed
-- Updated default network tier
+- Changes to existing features
 
 ### Fixed
-- Fixed regional IP creation bug
+- Bug fixes
+
+### Breaking Changes
+- Breaking changes (if any)
 
 -->

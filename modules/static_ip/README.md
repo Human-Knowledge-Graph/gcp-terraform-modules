@@ -17,7 +17,7 @@ Reference this module using a Git commit hash for version control:
 ```hcl
 module "static_ip" {
   # Pin to specific commit - check CHANGELOG.md for latest stable commits
-  source = "git::https://github.com/knaph/gcp-terraform-modules.git//modules/static_ip?ref=COMMIT_HASH"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/static_ip?ref=COMMIT_HASH"
 
   project_id = "my-gcp-project"
   name       = "my-app-ip"
@@ -31,7 +31,7 @@ module "static_ip" {
 
 ```hcl
 module "static_ip" {
-  source = "git::https://github.com/knaph/gcp-terraform-modules.git//modules/static_ip?ref=abc123d"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/static_ip?ref=efa9048"
 
   project_id = "my-gcp-project"
   name       = "my-app-ip"
@@ -43,7 +43,7 @@ module "static_ip" {
 
 ```hcl
 module "global_ip" {
-  source = "git::https://github.com/knaph/gcp-terraform-modules.git//modules/static_ip?ref=abc123d"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/static_ip?ref=efa9048"
 
   project_id = "my-gcp-project"
   name       = "my-global-ip"
@@ -55,7 +55,7 @@ module "global_ip" {
 
 ```hcl
 module "internal_ip" {
-  source = "git::https://github.com/knaph/gcp-terraform-modules.git//modules/static_ip?ref=abc123d"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/static_ip?ref=efa9048"
 
   project_id   = "my-gcp-project"
   name         = "internal-app-ip"
@@ -74,7 +74,7 @@ module "internal_ip" {
 
 ```hcl
 module "standard_ip" {
-  source = "git::https://github.com/knaph/gcp-terraform-modules.git//modules/static_ip?ref=abc123d"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/static_ip?ref=efa9048"
 
   project_id   = "my-gcp-project"
   name         = "standard-tier-ip"
