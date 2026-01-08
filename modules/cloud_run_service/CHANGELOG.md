@@ -2,7 +2,7 @@
 
 All notable changes to this module will be documented in this file.
 
-## [Unreleased]
+## [Commit: 5ef090f] - 2026-01-08
 
 ### Added
 - Initial release of cloud_run_service module
