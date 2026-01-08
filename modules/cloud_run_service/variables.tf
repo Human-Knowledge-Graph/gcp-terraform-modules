@@ -90,3 +90,9 @@ variable "ingress" {
     error_message = "Ingress must be one of: 'all', 'internal', or 'internal-and-cloud-load-balancing'."
   }
 }
+
+variable "cloudsql_instances" {
+  description = "Cloud SQL instance connection names to connect to (format: project:region:instance). Separate multiple instances with commas"
+  type        = string
+  default     = null
+}

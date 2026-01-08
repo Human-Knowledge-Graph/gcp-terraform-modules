@@ -13,6 +13,7 @@ This module creates a Google Cloud Run service with container deployment and con
 - Ingress controls (public, internal, or load balancer only)
 - Request timeout and concurrency configuration
 - Custom container port support
+- Cloud SQL database connections
 
 ## Usage
 
@@ -249,6 +250,58 @@ module "service" {
 }
 ```
 
+### Service with Cloud SQL Connection
+
+```hcl
+module "backend_with_database" {
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=13e32d9"
+
+  project_id             = "my-gcp-project"
+  region                 = "us-central1"
+  cloud_run_service_name = "backend-api"
+  image                  = "gcr.io/my-project/backend:latest"
+
+  # Connect to Cloud SQL instance
+  cloudsql_instances = "my-gcp-project:us-central1:my-postgres-instance"
+
+  # Service account needs Cloud SQL Client role
+  service_account_email = "backend@my-gcp-project.iam.gserviceaccount.com"
+
+  env_vars = {
+    DB_HOST = "/cloudsql/my-gcp-project:us-central1:my-postgres-instance"
+    DB_NAME = "production"
+    DB_USER = "app_user"
+  }
+
+  allowed_invoker_members = ["allUsers"]
+}
+```
+
+### Service with Multiple Cloud SQL Instances
+
+```hcl
+module "multi_database_service" {
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/cloud_run_service?ref=13e32d9"
+
+  project_id             = "my-gcp-project"
+  region                 = "us-central1"
+  cloud_run_service_name = "data-processor"
+  image                  = "gcr.io/my-project/processor:latest"
+
+  # Connect to multiple Cloud SQL instances (comma-separated)
+  cloudsql_instances = "my-gcp-project:us-central1:postgres-db,my-gcp-project:us-central1:mysql-db"
+
+  service_account_email = "processor@my-gcp-project.iam.gserviceaccount.com"
+
+  env_vars = {
+    POSTGRES_HOST = "/cloudsql/my-gcp-project:us-central1:postgres-db"
+    MYSQL_HOST    = "/cloudsql/my-gcp-project:us-central1:mysql-db"
+  }
+
+  allowed_invoker_members = ["allUsers"]
+}
+```
+
 ### Outputs Usage
 
 ```hcl
@@ -311,6 +364,7 @@ output "service_id" {
 | min_instances | Minimum number of container instances to keep running | `string` | `"0"` | no |
 | max_instances | Maximum number of container instances to scale to | `string` | `"100"` | no |
 | ingress | Ingress settings: 'all', 'internal', or 'internal-and-cloud-load-balancing' | `string` | `"all"` | no |
+| cloudsql_instances | Cloud SQL instance connection names (format: project:region:instance) | `string` | `null` | no |
 
 ## Outputs
 

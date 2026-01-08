@@ -2,6 +2,11 @@
 
 All notable changes to this module will be documented in this file.
 
+## [Unreleased]
+
+### Added
+- Cloud SQL connection support via `cloudsql_instances` variable
+
 ## [Commit: 13e32d9] - 2026-01-08
 
 ### Added

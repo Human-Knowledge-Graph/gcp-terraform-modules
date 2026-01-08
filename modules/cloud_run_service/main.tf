@@ -4,10 +4,15 @@ resource "google_cloud_run_service" "default" {
 
   template {
     metadata {
-      annotations = {
-        "autoscaling.knative.dev/minScale" = var.min_instances
-        "autoscaling.knative.dev/maxScale" = var.max_instances
-      }
+      annotations = merge(
+        {
+          "autoscaling.knative.dev/minScale" = var.min_instances
+          "autoscaling.knative.dev/maxScale" = var.max_instances
+        },
+        var.cloudsql_instances != null ? {
+          "run.googleapis.com/cloudsql-instances" = var.cloudsql_instances
+        } : {}
+      )
     }
 
     spec {
