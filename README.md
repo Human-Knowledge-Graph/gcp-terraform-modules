@@ -10,6 +10,10 @@ This repository contains production-ready Terraform modules designed to simplify
 
 ## Available Modules
 
+### Project Management
+
+- **[google_apis](./modules/google_apis)** - Enable multiple Google Cloud APIs for a project
+
 ### Compute
 
 - **[static_ip](./modules/static_ip)** - Create static IP addresses (regional or global, internal or external)
