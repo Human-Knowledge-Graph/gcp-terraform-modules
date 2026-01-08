@@ -1,0 +1,29 @@
+# Changelog - Single Secret Module
+
+All notable changes to this module will be documented in this file.
+
+## [Unreleased]
+
+### Added
+- Initial release of single_secret module
+- Create Secret Manager secret with automatic replication
+- Grant IAM access permissions to service accounts using secretAccessor role
+
+<!--
+Template for future updates:
+
+## [Commit: HASH] - YYYY-MM-DD
+
+### Added
+- New features
+
+### Changed
+- Changes to existing features
+
+### Fixed
+- Bug fixes
+
+### Breaking Changes
+- Breaking changes (if any)
+
+-->
