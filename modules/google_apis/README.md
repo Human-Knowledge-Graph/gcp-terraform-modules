@@ -15,7 +15,7 @@ Reference this module using a Git commit hash for version control:
 ```hcl
 module "google_apis" {
   # Pin to specific commit - check CHANGELOG.md for latest stable commits
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/google_apis?ref=COMMIT_HASH"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/google_apis?ref=6a077c4"
 
   project_id = "my-gcp-project"
 
@@ -33,7 +33,7 @@ module "google_apis" {
 
 ```hcl
 module "google_apis" {
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/google_apis?ref=COMMIT_HASH"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/google_apis?ref=6a077c4"
 
   project_id = "my-gcp-project"
 
@@ -50,7 +50,7 @@ module "google_apis" {
 
 ```hcl
 module "gke_apis" {
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/google_apis?ref=COMMIT_HASH"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/google_apis?ref=6a077c4"
 
   project_id = "my-gcp-project"
 
@@ -68,7 +68,7 @@ module "gke_apis" {
 
 ```hcl
 module "serverless_apis" {
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/google_apis?ref=COMMIT_HASH"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/google_apis?ref=6a077c4"
 
   project_id = "my-gcp-project"
 
@@ -85,7 +85,7 @@ module "serverless_apis" {
 
 ```hcl
 module "google_apis" {
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/google_apis?ref=COMMIT_HASH"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/google_apis?ref=6a077c4"
 
   project_id = var.project_id
 
