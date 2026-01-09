@@ -6,6 +6,8 @@ All notable changes to this module will be documented in this file.
 
 ### Added
 - Cloud SQL connection support via `cloudsql_instances` variable
+- Client name annotation support via `client_name` variable (defaults to "terraform")
+- Client version annotation support via `client_version` variable
 
 ## [Commit: 13e32d9] - 2026-01-08
 

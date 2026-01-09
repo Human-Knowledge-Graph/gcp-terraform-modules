@@ -51,9 +51,17 @@ resource "google_cloud_run_service" "default" {
   }
 
   metadata {
-    annotations = {
-      "run.googleapis.com/ingress" = var.ingress
-    }
+    annotations = merge(
+      {
+        "run.googleapis.com/ingress" = var.ingress
+      },
+      var.client_name != null ? {
+        "run.googleapis.com/client-name" = var.client_name
+      } : {},
+      var.client_version != null ? {
+        "run.googleapis.com/client-version" = var.client_version
+      } : {}
+    )
   }
 }
 

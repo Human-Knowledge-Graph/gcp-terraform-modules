@@ -96,3 +96,15 @@ variable "cloudsql_instances" {
   type        = string
   default     = null
 }
+
+variable "client_name" {
+  description = "Client name annotation (e.g., 'terraform', 'gcloud', 'console'). Used to track which tool deployed the service"
+  type        = string
+  default     = "terraform"
+}
+
+variable "client_version" {
+  description = "Client version annotation. Version of the tool used to deploy (e.g., Terraform version, gcloud version)"
+  type        = string
+  default     = null
+}

@@ -365,6 +365,8 @@ output "service_id" {
 | max_instances | Maximum number of container instances to scale to | `string` | `"100"` | no |
 | ingress | Ingress settings: 'all', 'internal', or 'internal-and-cloud-load-balancing' | `string` | `"all"` | no |
 | cloudsql_instances | Cloud SQL instance connection names (format: project:region:instance) | `string` | `null` | no |
+| client_name | Client name annotation (e.g., 'terraform', 'gcloud', 'console') | `string` | `"terraform"` | no |
+| client_version | Client version annotation (version of deployment tool) | `string` | `null` | no |
 
 ## Outputs
 
