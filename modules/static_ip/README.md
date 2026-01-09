@@ -138,3 +138,26 @@ These are included in the following predefined roles:
 - Global IPs are typically used for global load balancers
 - Internal IPs require a VPC network (not included in this module)
 - A random 4-digit suffix is automatically appended to ensure unique names
+
+<!-- BEGIN_TF_DOCS -->
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_project_id"></a> [project_id](#input_project_id) | The GCP project ID where the static IP will be created | `string` | n/a | yes |
+| <a name="input_address_type"></a> [address_type](#input_address_type) | The type of address to reserve. Options: INTERNAL or EXTERNAL | `string` | `"EXTERNAL"` | no |
+| <a name="input_description"></a> [description](#input_description) | An optional description of this resource | `string` | `""` | no |
+| <a name="input_labels"></a> [labels](#input_labels) | Labels to apply to the static IP address | `map(string)` | `{}` | no |
+| <a name="input_name"></a> [name](#input_name) | Base name for the static IP address. A random suffix will be appended | `string` | `"static-ip"` | no |
+| <a name="input_network_tier"></a> [network_tier](#input_network_tier) | The networking tier used for configuring this address. Options: PREMIUM or STANDARD | `string` | `"PREMIUM"` | no |
+| <a name="input_region"></a> [region](#input_region) | The region where the static IP will be created. If not specified, creates a global IP | `string` | `null` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_id"></a> [id](#output_id) | An identifier for the resource with format projects/{{project}}/regions/{{region}}/addresses/{{name}} |
+| <a name="output_ip_address"></a> [ip_address](#output_ip_address) | The static IP address that was allocated |
+| <a name="output_name"></a> [name](#output_name) | The name of the static IP address resource |
+| <a name="output_self_link"></a> [self_link](#output_self_link) | The URI of the created resource |
+<!-- END_TF_DOCS -->

@@ -345,36 +345,38 @@ output "service_id" {
 |------|---------|
 | google | >= 4.0 |
 
+<!-- BEGIN_TF_DOCS -->
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| project_id | The unique ID of the project | `string` | n/a | yes |
-| region | The region for the project | `string` | `"us-central1"` | no |
-| cloud_run_service_name | Name of the Cloud Run Service | `string` | n/a | yes |
-| image | Container image location | `string` | n/a | yes |
-| env_vars | Environment variables as pairs of key, values | `map(string)` | n/a | yes |
-| allowed_invoker_members | List of members allowed to invoke the Cloud Run service | `list(string)` | n/a | yes |
-| service_account_email | Service account email to run the Cloud Run service as | `string` | `null` | no |
-| cpu_limit | CPU limit for the container (e.g., '1000m' for 1 vCPU) | `string` | `"1000m"` | no |
-| memory_limit | Memory limit for the container (e.g., '256Mi', '512Mi', '1Gi') | `string` | `"512Mi"` | no |
-| container_port | Port that the container listens on | `number` | `8080` | no |
-| timeout_seconds | Maximum duration in seconds for each request | `number` | `300` | no |
-| container_concurrency | Maximum number of concurrent requests per container instance | `number` | `80` | no |
-| min_instances | Minimum number of container instances to keep running | `string` | `"0"` | no |
-| max_instances | Maximum number of container instances to scale to | `string` | `"100"` | no |
-| ingress | Ingress settings: 'all', 'internal', or 'internal-and-cloud-load-balancing' | `string` | `"all"` | no |
-| cloudsql_instances | Cloud SQL instance connection names (format: project:region:instance) | `string` | `null` | no |
-| client_name | Client name annotation (e.g., 'terraform', 'gcloud', 'console') | `string` | `"terraform"` | no |
-| client_version | Client version annotation (version of deployment tool) | `string` | `null` | no |
+| <a name="input_allowed_invoker_members"></a> [allowed_invoker_members](#input_allowed_invoker_members) | List of members allowed to invoke the Cloud Run service | `list(string)` | n/a | yes |
+| <a name="input_cloud_run_service_name"></a> [cloud_run_service_name](#input_cloud_run_service_name) | Name of the default Cloud Run Service | `string` | n/a | yes |
+| <a name="input_env_vars"></a> [env_vars](#input_env_vars) | Environment variables as pairs of key, values | `map(string)` | n/a | yes |
+| <a name="input_image"></a> [image](#input_image) | Container image location | `string` | n/a | yes |
+| <a name="input_project_id"></a> [project_id](#input_project_id) | The unique ID of the project. | `string` | n/a | yes |
+| <a name="input_client_name"></a> [client_name](#input_client_name) | Client name annotation (e.g., 'terraform', 'gcloud', 'console'). Used to track which tool deployed the service | `string` | `"terraform"` | no |
+| <a name="input_client_version"></a> [client_version](#input_client_version) | Client version annotation. Version of the tool used to deploy (e.g., Terraform version, gcloud version) | `string` | `null` | no |
+| <a name="input_cloudsql_instances"></a> [cloudsql_instances](#input_cloudsql_instances) | Cloud SQL instance connection names to connect to (format: project:region:instance). Separate multiple instances with commas | `string` | `null` | no |
+| <a name="input_container_concurrency"></a> [container_concurrency](#input_container_concurrency) | Maximum number of concurrent requests per container instance | `number` | `80` | no |
+| <a name="input_container_port"></a> [container_port](#input_container_port) | Port that the container listens on | `number` | `8080` | no |
+| <a name="input_cpu_limit"></a> [cpu_limit](#input_cpu_limit) | CPU limit for the container (e.g., '1000m' for 1 vCPU, '2000m' for 2 vCPUs) | `string` | `"1000m"` | no |
+| <a name="input_ingress"></a> [ingress](#input_ingress) | Ingress settings for the service: 'all', 'internal', or 'internal-and-cloud-load-balancing' | `string` | `"all"` | no |
+| <a name="input_max_instances"></a> [max_instances](#input_max_instances) | Maximum number of container instances to scale to | `string` | `"100"` | no |
+| <a name="input_memory_limit"></a> [memory_limit](#input_memory_limit) | Memory limit for the container (e.g., '256Mi', '512Mi', '1Gi', '2Gi') | `string` | `"512Mi"` | no |
+| <a name="input_min_instances"></a> [min_instances](#input_min_instances) | Minimum number of container instances to keep running | `string` | `"0"` | no |
+| <a name="input_region"></a> [region](#input_region) | The region for the project. | `string` | `"us-central1"` | no |
+| <a name="input_service_account_email"></a> [service_account_email](#input_service_account_email) | Service account email to run the Cloud Run service as. If not provided, uses the default Compute Engine service account | `string` | `null` | no |
+| <a name="input_timeout_seconds"></a> [timeout_seconds](#input_timeout_seconds) | Maximum duration in seconds for each request | `number` | `300` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| service_name | The name of the Cloud Run service |
-| service_url | The URL of the Cloud Run service |
-| service_id | The ID of the Cloud Run service |
+| <a name="output_service_id"></a> [service_id](#output_service_id) | The ID of the Cloud Run service |
+| <a name="output_service_name"></a> [service_name](#output_service_name) | The name of the Cloud Run service |
+| <a name="output_service_url"></a> [service_url](#output_service_url) | The URL of the Cloud Run service |
+<!-- END_TF_DOCS -->
 
 ## IAM Permissions Required
 
