@@ -13,9 +13,10 @@ resource "google_artifact_registry_repository" "this" {
     id     = "delete-old-tagged"
     action = "DELETE"
     condition {
-      tag_state    = "TAGGED"
-      tag_prefixes = var.tags_to_delete_after_a_month
-      older_than   = local.delete_older_than_seconds
+      tag_state  = "TAGGED"
+      older_than = local.delete_older_than_seconds
+      # When empty, matches all tags (except those protected by KEEP policies)
+      tag_prefixes = length(var.tags_to_delete_after_a_month) > 0 ? var.tags_to_delete_after_a_month : null
     }
   }
   cleanup_policies {

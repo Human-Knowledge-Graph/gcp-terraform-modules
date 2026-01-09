@@ -33,14 +33,14 @@ variable "description" {
 
 variable "tags_to_delete_after_a_month" {
   type        = list(string)
-  description = "Tags of artifacts that should be deleted after 1 month"
-  default     = ["alpha", "beta"]
+  description = "Tags of artifacts to delete after specified days. Empty list means all tags (except those in tags_to_keep_forever)"
+  default     = []
 }
 
 variable "tags_to_keep_forever" {
   type        = list(string)
   description = "Tags of artifacts to keep until manually deleted"
-  default     = ["release"]
+  default     = ["release", "latest"]
 }
 
 variable "count_of_versions_to_keep" {

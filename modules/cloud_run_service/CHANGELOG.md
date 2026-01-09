@@ -8,6 +8,8 @@ All notable changes to this module will be documented in this file.
 - Cloud SQL connection support via `cloudsql_instances` variable
 - Client name annotation support via `client_name` variable (defaults to "terraform")
 - Client version annotation support via `client_version` variable
+- Revision tag support via `revision_tag` variable (creates URL like https://TAG---service.run.app)
+- New `tagged_url` output for the tagged revision URL
 
 ## [Commit: 13e32d9] - 2026-01-08
 

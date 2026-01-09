@@ -10,6 +10,7 @@ All notable changes to this module will be documented in this file.
 
 ### Changed
 - Renamed internal resource from `my-repo` to `this` for consistency
+- `tags_to_delete_after_a_month` now defaults to empty list, which deletes all tags (except those protected by KEEP policies)
 
 ## [Commit: fea94fb] - 2026-01-08
 

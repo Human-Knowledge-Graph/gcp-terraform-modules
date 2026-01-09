@@ -108,3 +108,9 @@ variable "client_version" {
   type        = string
   default     = null
 }
+
+variable "revision_tag" {
+  description = "Tag to assign to the latest revision (e.g., 'stable', 'canary'). Creates a URL like https://TAG---service.run.app"
+  type        = string
+  default     = null
+}

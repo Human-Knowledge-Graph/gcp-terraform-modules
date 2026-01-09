@@ -39,8 +39,8 @@ module "docker_registry" {
 | description | Description of the artifacts registry repository | `string` | `""` | no |
 | cleanup_policy_dry_run | If true, cleanup policies will only log what would be deleted without actually deleting | `bool` | `false` | no |
 | delete_older_than_days | Number of days after which tagged artifacts should be deleted | `number` | `30` | no |
-| tags_to_delete_after_a_month | Tags of artifacts that should be deleted after the specified days | `list(string)` | `["alpha", "beta"]` | no |
-| tags_to_keep_forever | Tags of artifacts to keep until manually deleted | `list(string)` | `["release"]` | no |
+| tags_to_delete_after_a_month | Tags of artifacts to delete after specified days. Empty list means all tags (except those in tags_to_keep_forever) | `list(string)` | `[]` | no |
+| tags_to_keep_forever | Tags of artifacts to keep until manually deleted | `list(string)` | `["release", "latest"]` | no |
 | count_of_versions_to_keep | Determines number of version to keep | `number` | `1` | no |
 
 ## Outputs

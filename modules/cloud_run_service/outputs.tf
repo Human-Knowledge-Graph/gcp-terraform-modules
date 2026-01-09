@@ -12,3 +12,8 @@ output "service_id" {
   description = "The ID of the Cloud Run service"
   value       = google_cloud_run_service.default.id
 }
+
+output "tagged_url" {
+  description = "The tagged URL of the Cloud Run service revision (if revision_tag is set)"
+  value       = var.revision_tag != null ? google_cloud_run_service.default.status[0].traffic[0].url : null
+}
