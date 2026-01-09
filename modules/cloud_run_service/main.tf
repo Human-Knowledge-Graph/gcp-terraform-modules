@@ -11,6 +11,12 @@ resource "google_cloud_run_service" "default" {
         },
         var.cloudsql_instances != null ? {
           "run.googleapis.com/cloudsql-instances" = var.cloudsql_instances
+        } : {},
+        var.client_name != null ? {
+          "run.googleapis.com/client-name" = var.client_name
+        } : {},
+        var.client_version != null ? {
+          "run.googleapis.com/client-version" = var.client_version
         } : {}
       )
     }
@@ -51,17 +57,9 @@ resource "google_cloud_run_service" "default" {
   }
 
   metadata {
-    annotations = merge(
-      {
-        "run.googleapis.com/ingress" = var.ingress
-      },
-      var.client_name != null ? {
-        "run.googleapis.com/client-name" = var.client_name
-      } : {},
-      var.client_version != null ? {
-        "run.googleapis.com/client-version" = var.client_version
-      } : {}
-    )
+    annotations = {
+      "run.googleapis.com/ingress" = var.ingress
+    }
   }
 }
 
