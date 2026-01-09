@@ -22,6 +22,10 @@ This repository contains production-ready Terraform modules designed to simplify
 
 - **[cloud_run_service](./modules/cloud_run_service)** - Deploy containerized applications to Cloud Run with IAM controls
 
+### Artifacts
+
+- **[docker_artifacts_registry](./modules/docker_artifacts_registry)** - Create Artifact Registry repository for Docker images with cleanup policies
+
 ### Security
 
 - **[single_secret](./modules/single_secret)** - Create Secret Manager secret with IAM access permissions
