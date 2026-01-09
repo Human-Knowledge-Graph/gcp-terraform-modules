@@ -4,7 +4,7 @@ All notable changes to this module will be documented in this file.
 
 ## [Unreleased]
 
-## [Commit: f2ef0a6] - 2026-01-08
+## [Commit: fea94fb] - 2026-01-08
 
 ### Added
 - Initial release of docker_artifacts_registry module

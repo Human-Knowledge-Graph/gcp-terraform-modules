@@ -6,7 +6,7 @@ This module creates a Google Artifact Registry repository for Docker images with
 
 ```hcl
 module "docker_registry" {
-  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/docker_artifacts_registry?ref=f2ef0a6"
+  source = "git::https://github.com/Human-Knowledge-Graph/gcp-terraform-modules.git//modules/docker_artifacts_registry?ref=fea94fb"
 
   project_id               = "my-gcp-project"
   location                 = "us-central1"
