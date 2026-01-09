@@ -3,6 +3,18 @@ variable "project_id" {
   description = "Google project id"
 }
 
+variable "cleanup_policy_dry_run" {
+  type        = bool
+  description = "If true, cleanup policies will only log what would be deleted without actually deleting"
+  default     = false
+}
+
+variable "delete_older_than_days" {
+  type        = number
+  description = "Number of days after which tagged artifacts should be deleted"
+  default     = 30
+}
+
 variable "location" {
   type        = string
   description = "Location to store the artifacts"

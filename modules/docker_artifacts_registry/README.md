@@ -37,7 +37,9 @@ module "docker_registry" {
 | location | Location to store the artifacts | `string` | n/a | yes |
 | artifacts_repository_id | Name of the artifacts repository | `string` | n/a | yes |
 | description | Description of the artifacts registry repository | `string` | `""` | no |
-| tags_to_delete_after_a_month | Tags of artifacts that should be deleted after 1 month | `list(string)` | `["alpha", "beta"]` | no |
+| cleanup_policy_dry_run | If true, cleanup policies will only log what would be deleted without actually deleting | `bool` | `false` | no |
+| delete_older_than_days | Number of days after which tagged artifacts should be deleted | `number` | `30` | no |
+| tags_to_delete_after_a_month | Tags of artifacts that should be deleted after the specified days | `list(string)` | `["alpha", "beta"]` | no |
 | tags_to_keep_forever | Tags of artifacts to keep until manually deleted | `list(string)` | `["release"]` | no |
 | count_of_versions_to_keep | Determines number of version to keep | `number` | `1` | no |
 
@@ -46,7 +48,7 @@ module "docker_registry" {
 | Name | Description |
 |------|-------------|
 | repository_id | Id of the repository |
-| repository_name | name of the repository |
+| repository_name | Name of the repository |
 <!-- END_TF_DOCS -->
 
 ## IAM Permissions Required
