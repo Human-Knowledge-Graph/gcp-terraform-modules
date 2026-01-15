@@ -33,22 +33,22 @@ module "docker_registry" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| project_id | Google project id | `string` | n/a | yes |
-| location | Location to store the artifacts | `string` | n/a | yes |
-| artifacts_repository_id | Name of the artifacts repository | `string` | n/a | yes |
-| description | Description of the artifacts registry repository | `string` | `""` | no |
-| cleanup_policy_dry_run | If true, cleanup policies will only log what would be deleted without actually deleting | `bool` | `false` | no |
-| delete_older_than_days | Number of days after which tagged artifacts should be deleted | `number` | `30` | no |
-| tags_to_delete_after_a_month | Tags of artifacts to delete after specified days. Empty list means all tags (except those in tags_to_keep_forever) | `list(string)` | `[]` | no |
-| tags_to_keep_forever | Tags of artifacts to keep until manually deleted | `list(string)` | `["release", "latest"]` | no |
-| count_of_versions_to_keep | Determines number of version to keep | `number` | `1` | no |
+| <a name="input_artifacts_repository_id"></a> [artifacts_repository_id](#input_artifacts_repository_id) | Name of the artifacts repository | `string` | n/a | yes |
+| <a name="input_location"></a> [location](#input_location) | Location to store the artifacts | `string` | n/a | yes |
+| <a name="input_project_id"></a> [project_id](#input_project_id) | Google project id | `string` | n/a | yes |
+| <a name="input_cleanup_policy_dry_run"></a> [cleanup_policy_dry_run](#input_cleanup_policy_dry_run) | If true, cleanup policies will only log what would be deleted without actually deleting | `bool` | `false` | no |
+| <a name="input_count_of_versions_to_keep"></a> [count_of_versions_to_keep](#input_count_of_versions_to_keep) | Determines number of version to keep | `number` | `1` | no |
+| <a name="input_delete_older_than_days"></a> [delete_older_than_days](#input_delete_older_than_days) | Number of days after which tagged artifacts should be deleted | `number` | `30` | no |
+| <a name="input_description"></a> [description](#input_description) | Description of the artifacts registry repository | `string` | `""` | no |
+| <a name="input_tags_to_delete_after_a_month"></a> [tags_to_delete_after_a_month](#input_tags_to_delete_after_a_month) | Tags of artifacts to delete after specified days. Empty list means all tags (except those in tags_to_keep_forever) | `list(string)` | `[]` | no |
+| <a name="input_tags_to_keep_forever"></a> [tags_to_keep_forever](#input_tags_to_keep_forever) | Tags of artifacts to keep until manually deleted | `list(string)` | <pre>[<br/>  "release",<br/>  "latest"<br/>]</pre> | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| repository_id | Id of the repository |
-| repository_name | Name of the repository |
+| <a name="output_repository_id"></a> [repository_id](#output_repository_id) | Id of the repository |
+| <a name="output_repository_name"></a> [repository_name](#output_repository_name) | Name of the repository |
 <!-- END_TF_DOCS -->
 
 ## IAM Permissions Required
