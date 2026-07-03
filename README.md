@@ -21,6 +21,7 @@ This repository contains production-ready Terraform modules designed to simplify
 ### Serverless
 
 - **[cloud_run_service](./modules/cloud_run_service)** - Deploy containerized applications to Cloud Run with IAM controls
+- **[cloud_function_minimal_http_form](./modules/cloud_function_minimal_http_form)** - Public HTTP Cloud Function for HTML form submissions (contact forms) with CORS locking and Secret Manager injection
 
 ### Artifacts
 
