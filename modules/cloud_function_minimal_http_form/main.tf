@@ -2,9 +2,6 @@ locals {
   service_account_id = var.service_account_id != "" ? var.service_account_id : "${var.function_name}-sa"
   source_bucket      = var.create_source_bucket ? google_storage_bucket.source[0].name : var.source_bucket_name
 
-  # Unique secret names for IAM bindings (the same secret may back multiple env vars)
-  unique_secret_names = toset([for s in var.secrets : s.secret_name])
-
   # CORS and rate-limit config passed as env vars; the function code is responsible for acting on them
   framework_env_vars = {
     ALLOWED_ORIGINS           = join(",", var.allowed_origins)
@@ -55,11 +52,10 @@ resource "google_storage_bucket" "source" {
 # using the project-wide Compute Engine default SA (which has broad permissions),
 # this module creates a dedicated SA for this function with zero permissions by default.
 #
-# Permissions are added explicitly by the IAM resources further below:
-#   - roles/secretmanager.secretAccessor  →  only for secrets listed in var.secrets
-#
+# This SA starts with zero permissions. Grant it access to secrets via the
+# single_secret module that owns each secret (pass output.service_account_email).
 # If the function is ever compromised, the blast radius is limited to what this
-# SA can access — nothing else in the project.
+# SA has been explicitly granted — nothing else in the project.
 #
 # account_id defaults to "<function_name>-sa" (e.g. "contact-form-sa").
 # Override with var.service_account_id if you need a specific name.
@@ -156,25 +152,4 @@ resource "google_cloudfunctions2_function_iam_member" "public_invoker" {
   cloud_function = google_cloudfunctions2_function.function.name
   role           = "roles/cloudfunctions.invoker"
   member         = "allUsers"
-}
-
-# ── IAM: Secret Manager Access for the Function SA ───────────────────────────
-#
-# The function's SA starts with zero permissions. This grants it
-# roles/secretmanager.secretAccessor on each secret listed in var.secrets —
-# the minimum needed to read a secret value at runtime.
-#
-# for_each iterates over deduplicated secret names (local.unique_secret_names)
-# so that two env vars pointing at the same secret don't produce a duplicate
-# IAM binding, which would cause a Terraform error.
-#
-# Note: the secrets themselves must already exist in Secret Manager before
-# running terraform apply. This module only grants access, it does not create them.
-
-resource "google_secret_manager_secret_iam_member" "function_secret_access" {
-  for_each  = local.unique_secret_names
-  project   = var.project_id
-  secret_id = each.value
-  role      = "roles/secretmanager.secretAccessor"
-  member    = "serviceAccount:${google_service_account.function_sa.email}"
 }
