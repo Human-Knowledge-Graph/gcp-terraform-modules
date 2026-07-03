@@ -10,7 +10,7 @@ output "function_name" {
 
 output "service_account_email" {
   description = "Email of the function's dedicated service account. Use this to grant additional GCP permissions the function may need (e.g. Firestore access for rate limiting)."
-  value       = google_service_account.function_sa.email
+  value       = var.service_account_email
 }
 
 output "source_bucket_name" {

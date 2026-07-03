@@ -1,6 +1,5 @@
 locals {
-  service_account_id = var.service_account_id != "" ? var.service_account_id : "${var.function_name}-sa"
-  source_bucket      = var.create_source_bucket ? google_storage_bucket.source[0].name : var.source_bucket_name
+  source_bucket = var.create_source_bucket ? google_storage_bucket.source[0].name : var.source_bucket_name
 
   placeholder_source = {
     "python" = "def ${var.entry_point}(request):\n    return 'OK', 200\n"
@@ -84,26 +83,6 @@ resource "google_storage_bucket_object" "placeholder_source" {
   }
 }
 
-# ── Service Account ───────────────────────────────────────────────────────────
-#
-# Every Cloud Function runs as a Google identity (service account). Rather than
-# using the project-wide Compute Engine default SA (which has broad permissions),
-# this module creates a dedicated SA for this function with zero permissions by default.
-#
-# This SA starts with zero permissions. Grant it access to secrets via the
-# single_secret module that owns each secret (pass output.service_account_email).
-# If the function is ever compromised, the blast radius is limited to what this
-# SA has been explicitly granted — nothing else in the project.
-#
-# account_id defaults to "<function_name>-sa" (e.g. "contact-form-sa").
-# Override with var.service_account_id if you need a specific name.
-
-resource "google_service_account" "function_sa" {
-  account_id   = local.service_account_id
-  display_name = "Service account for ${var.function_name} Cloud Function"
-  project      = var.project_id
-}
-
 # ── Cloud Function (Gen 2) ────────────────────────────────────────────────────
 #
 # Gen 2 functions run on Cloud Run under the hood and support longer timeouts,
@@ -140,7 +119,7 @@ resource "google_cloudfunctions2_function" "function" {
     max_instance_count             = var.max_instances
     timeout_seconds                = var.timeout_seconds
     available_memory               = var.available_memory
-    service_account_email          = google_service_account.function_sa.email
+    service_account_email          = var.service_account_email
     all_traffic_on_latest_revision = true
 
     ingress_settings = var.ingress_settings

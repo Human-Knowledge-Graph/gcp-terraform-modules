@@ -22,10 +22,9 @@ variable "description" {
   default     = ""
 }
 
-variable "service_account_id" {
-  description = "The account ID for the function's dedicated service account. Defaults to '<function_name>-sa' when empty."
+variable "service_account_email" {
+  description = "Email of the service account the function will run as. The SA must be created externally (e.g. via the single_secret module or a dedicated SA module)."
   type        = string
-  default     = ""
 }
 
 # ── Source Code ───────────────────────────────────────────────────────────────
