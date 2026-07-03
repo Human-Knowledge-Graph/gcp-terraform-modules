@@ -349,7 +349,7 @@ output "service_id" {
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_allowed_invoker_members"></a> [allowed_invoker_members](#input_allowed_invoker_members) | List of members allowed to invoke the Cloud Run service | `list(string)` | n/a | yes |
 | <a name="input_cloud_run_service_name"></a> [cloud_run_service_name](#input_cloud_run_service_name) | Name of the default Cloud Run Service | `string` | n/a | yes |
 | <a name="input_env_vars"></a> [env_vars](#input_env_vars) | Environment variables as pairs of key, values | `map(string)` | n/a | yes |
@@ -372,7 +372,7 @@ output "service_id" {
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_service_id"></a> [service_id](#output_service_id) | The ID of the Cloud Run service |
 | <a name="output_service_name"></a> [service_name](#output_service_name) | The name of the Cloud Run service |
 | <a name="output_service_url"></a> [service_url](#output_service_url) | The URL of the Cloud Run service |

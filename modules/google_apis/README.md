@@ -203,14 +203,14 @@ These are included in the following predefined roles:
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_enabled_google_api_services"></a> [enabled_google_api_services](#input_enabled_google_api_services) | List of APIs to enable for the project | `list(string)` | n/a | yes |
 | <a name="input_project_id"></a> [project_id](#input_project_id) | The unique ID of the project. | `string` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_enabled_services"></a> [enabled_services](#output_enabled_services) | List of enabled Google API services |
 | <a name="output_services"></a> [services](#output_services) | Map of enabled Google API services with their full resource details |
 <!-- END_TF_DOCS -->

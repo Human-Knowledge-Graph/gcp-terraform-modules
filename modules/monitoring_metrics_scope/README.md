@@ -56,13 +56,13 @@ These are included in the following predefined roles:
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_metrics_scope_project_id"></a> [metrics_scope_project_id](#input_metrics_scope_project_id) | Project ID of the central Cloud Monitoring metrics scope (host project) | `string` | n/a | yes |
 | <a name="input_monitored_project_ids"></a> [monitored_project_ids](#input_monitored_project_ids) | Set of project IDs whose metrics should be visible in the metrics scope | `set(string)` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_monitored_projects"></a> [monitored_projects](#output_monitored_projects) | Monitored projects attached to the metrics scope |
 <!-- END_TF_DOCS -->

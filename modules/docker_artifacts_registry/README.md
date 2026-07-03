@@ -32,7 +32,7 @@ module "docker_registry" {
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_artifacts_repository_id"></a> [artifacts_repository_id](#input_artifacts_repository_id) | Name of the artifacts repository | `string` | n/a | yes |
 | <a name="input_location"></a> [location](#input_location) | Location to store the artifacts | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project_id](#input_project_id) | Google project id | `string` | n/a | yes |
@@ -46,7 +46,7 @@ module "docker_registry" {
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_repository_id"></a> [repository_id](#output_repository_id) | Id of the repository |
 | <a name="output_repository_name"></a> [repository_name](#output_repository_name) | Name of the repository |
 <!-- END_TF_DOCS -->

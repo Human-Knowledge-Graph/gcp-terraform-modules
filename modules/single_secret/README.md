@@ -214,14 +214,14 @@ resource "google_secret_manager_secret_version" "my_secret_version" {
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_secret_id"></a> [secret_id](#input_secret_id) | n/a | `string` | n/a | yes |
 | <a name="input_service_account_with_access_permissions"></a> [service_account_with_access_permissions](#input_service_account_with_access_permissions) | Determines list of service accounts with permission to access the secret | `list(string)` | `[]` | no |
 
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_secret_id"></a> [secret_id](#output_secret_id) | n/a |
 | <a name="output_secret_name"></a> [secret_name](#output_secret_name) | n/a |
 <!-- END_TF_DOCS -->

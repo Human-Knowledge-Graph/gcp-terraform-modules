@@ -143,7 +143,7 @@ These are included in the following predefined roles:
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_project_id"></a> [project_id](#input_project_id) | The GCP project ID where the static IP will be created | `string` | n/a | yes |
 | <a name="input_address_type"></a> [address_type](#input_address_type) | The type of address to reserve. Options: INTERNAL or EXTERNAL | `string` | `"EXTERNAL"` | no |
 | <a name="input_description"></a> [description](#input_description) | An optional description of this resource | `string` | `""` | no |
@@ -155,7 +155,7 @@ These are included in the following predefined roles:
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_id"></a> [id](#output_id) | An identifier for the resource with format projects/{{project}}/regions/{{region}}/addresses/{{name}} |
 | <a name="output_ip_address"></a> [ip_address](#output_ip_address) | The static IP address that was allocated |
 | <a name="output_name"></a> [name](#output_name) | The name of the static IP address resource |

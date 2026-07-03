@@ -143,7 +143,7 @@ output "cluster_location" {
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_cluster_name"></a> [cluster_name](#input_cluster_name) | The name of the GKE Autopilot cluster. | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project_id](#input_project_id) | The unique ID of the GCP project. | `string` | n/a | yes |
 | <a name="input_deletion_protection"></a> [deletion_protection](#input_deletion_protection) | Whether to enable deletion protection on the cluster. Set to false to allow Terraform to destroy the cluster. | `bool` | `false` | no |
@@ -155,7 +155,7 @@ output "cluster_location" {
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_cluster_ca_certificate"></a> [cluster_ca_certificate](#output_cluster_ca_certificate) | The base64-encoded public certificate authority for the cluster. Used to authenticate with the Kubernetes API. |
 | <a name="output_cluster_endpoint"></a> [cluster_endpoint](#output_cluster_endpoint) | The IP address of the cluster's Kubernetes API server endpoint. |
 | <a name="output_cluster_id"></a> [cluster_id](#output_cluster_id) | The unique identifier of the GKE Autopilot cluster. |
