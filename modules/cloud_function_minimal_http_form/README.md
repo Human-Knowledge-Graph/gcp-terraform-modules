@@ -1,13 +1,13 @@
 # cloud_function_minimal_http_form
 
-A reusable Terraform module for a public HTTP Cloud Function designed to handle HTML form submissions (e.g. a contact form). It provisions the function, a dedicated service account, CORS configuration, and Secret Manager access — without a load balancer or Cloud Armor, keeping infrastructure cost near zero.
+A reusable Terraform module for a public HTTP Cloud Function designed to handle HTML form submissions (e.g. a contact form). It provisions the function, CORS configuration, and Secret Manager secret injection — without a load balancer or Cloud Armor, keeping infrastructure cost near zero. The service account is managed externally and passed in.
 
 ## Features
 
 - **Cloud Functions Gen 2** — backed by Cloud Run, longer timeouts, better cold-start performance
 - **CORS** — allowed origins, methods, and headers passed as environment variables for the function to enforce
 - **Secrets injection** — API keys and credentials pulled from Secret Manager at runtime; never stored in Terraform state
-- **Dedicated service account** — a dedicated SA is created for the function; grant it access to secrets via the `single_secret` module that owns each secret
+- **External service account** — the function's identity is owned and managed outside this module; pass `service_account_email` as a required input
 - **Decoupled deployments** — `terraform apply` manages infrastructure; `gcloud functions deploy` updates code independently without state conflicts
 
 ## Required GCP APIs
@@ -28,12 +28,21 @@ gcloud services enable \
 ### Minimal example (javadebadi.com contact form)
 
 ```hcl
+# 1. Create the service account outside this module
+resource "google_service_account" "contact_form_sa" {
+  account_id   = "contact-form-sa"
+  display_name = "Service account for contact-form Cloud Function"
+  project      = "my-gcp-project"
+}
+
+# 2. Deploy the function, passing the SA email in
 module "contact_form" {
   source = "../../modules/cloud_function_minimal_http_form"
 
-  project_id    = "my-gcp-project"
-  region        = "us-central1"
-  function_name = "contact-form"
+  project_id            = "my-gcp-project"
+  region                = "us-central1"
+  function_name         = "contact-form"
+  service_account_email = google_service_account.contact_form_sa.email
 
   # Source code — upload your ZIP here before terraform apply
   source_bucket_name   = "my-deployment-artifacts"
@@ -59,14 +68,13 @@ module "contact_form" {
   ]
 }
 
-# Grant the function's SA access to each secret via the single_secret module
-# that owns it. This module does not grant IAM on secrets it doesn't own.
+# 3. Grant the SA access to each secret via the module that owns it
 module "sendgrid_secret" {
   source = "../../modules/single_secret"
 
-  project_id  = "my-gcp-project"
-  secret_name = "sendgrid-api-key"
-  accessor_service_accounts = [module.contact_form.service_account_email]
+  project_id                = "my-gcp-project"
+  secret_name               = "sendgrid-api-key"
+  accessor_service_accounts = [google_service_account.contact_form_sa.email]
 }
 
 output "contact_form_url" {
@@ -77,16 +85,22 @@ output "contact_form_url" {
 ### With an existing source bucket created by this module
 
 ```hcl
+resource "google_service_account" "contact_form_sa" {
+  account_id = "contact-form-sa"
+  project    = "my-gcp-project"
+}
+
 module "contact_form" {
   source = "../../modules/cloud_function_minimal_http_form"
 
-  project_id    = "my-gcp-project"
-  region        = "us-central1"
-  function_name = "contact-form"
+  project_id            = "my-gcp-project"
+  region                = "us-central1"
+  function_name         = "contact-form"
+  service_account_email = google_service_account.contact_form_sa.email
 
   source_bucket_name   = "contact-form-source-bucket"
   source_object_name   = "source.zip"
-  create_source_bucket = true   # Terraform creates and owns the bucket
+  create_source_bucket = true   # Terraform creates the bucket and uploads a placeholder ZIP
   # ...
 }
 ```
@@ -136,6 +150,7 @@ The following environment variables are automatically set on the function. Your 
 | <a name="input_allowed_origins"></a> [allowed_origins](#input_allowed_origins) | List of origins permitted by CORS (e.g. ['https://javadebadi.com']). Passed to the function as the ALLOWED_ORIGINS environment variable (comma-separated). | `list(string)` | n/a | yes |
 | <a name="input_function_name"></a> [function_name](#input_function_name) | The name of the Cloud Function (Gen 2). Must be unique within the project and region. | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project_id](#input_project_id) | The GCP project ID where the function will be deployed. | `string` | n/a | yes |
+| <a name="input_service_account_email"></a> [service_account_email](#input_service_account_email) | Email of the service account the function will run as. Must be created externally before apply. | `string` | n/a | yes |
 | <a name="input_source_bucket_name"></a> [source_bucket_name](#input_source_bucket_name) | Name of the Cloud Storage bucket that holds the function source ZIP. Used as both the name when creating and as a reference when not creating. | `string` | n/a | yes |
 | <a name="input_source_object_name"></a> [source_object_name](#input_source_object_name) | Path to the source ZIP within the bucket (e.g. 'contact-form/source.zip'). Terraform ignores changes to this after creation; use gcloud functions deploy to update code. | `string` | n/a | yes |
 | <a name="input_allow_unauthenticated"></a> [allow_unauthenticated](#input_allow_unauthenticated) | When true, grants allUsers the cloudfunctions.invoker role so the function can be called without authentication. Required for public contact forms. | `bool` | `true` | no |
@@ -154,7 +169,6 @@ The following environment variables are automatically set on the function. Your 
 | <a name="input_region"></a> [region](#input_region) | The region for the Cloud Function. | `string` | `"us-central1"` | no |
 | <a name="input_runtime"></a> [runtime](#input_runtime) | The Cloud Functions runtime (e.g. 'nodejs20', 'python312', 'go122'). | `string` | `"nodejs20"` | no |
 | <a name="input_secrets"></a> [secrets](#input_secrets) | Secrets from Secret Manager to inject as environment variables. Each secret must already exist in Secret Manager before apply. | <pre>list(object({<br/>    env_var_name = string<br/>    secret_name  = string<br/>    version      = optional(string, "latest")<br/>  }))</pre> | `[]` | no |
-| <a name="input_service_account_id"></a> [service_account_id](#input_service_account_id) | The account ID for the function's dedicated service account. Defaults to '<function_name>-sa' when empty. | `string` | `""` | no |
 | <a name="input_timeout_seconds"></a> [timeout_seconds](#input_timeout_seconds) | Maximum duration in seconds for a single function invocation. | `number` | `60` | no |
 
 ## Outputs
@@ -163,12 +177,13 @@ The following environment variables are automatically set on the function. Your 
 | ---- | ----------- |
 | <a name="output_function_name"></a> [function_name](#output_function_name) | The name of the deployed Cloud Function. Use this with gcloud functions deploy to push code updates. |
 | <a name="output_function_url"></a> [function_url](#output_function_url) | The HTTPS URL of the Cloud Function. Use this as the action endpoint in your contact form. |
-| <a name="output_service_account_email"></a> [service_account_email](#output_service_account_email) | Email of the function's dedicated service account. Use this to grant additional GCP permissions the function may need (e.g. Firestore access for rate limiting). |
+| <a name="output_service_account_email"></a> [service_account_email](#output_service_account_email) | Pass-through of var.service_account_email. Useful for wiring into downstream modules (e.g. single_secret) without repeating the value. |
 | <a name="output_source_bucket_name"></a> [source_bucket_name](#output_source_bucket_name) | Name of the Cloud Storage bucket holding the function source ZIP. Only meaningful when create_source_bucket = true. |
 <!-- END_TF_DOCS -->
 
 ## Notes
 
 - **Rate limiting** is configured via environment variables only. The function code is responsible for enforcement (e.g. using reCAPTCHA or Firestore-based counters). No load balancer or Cloud Armor is created by this module.
-- **Secrets must exist before `terraform apply`**, and IAM access must be granted separately. This module does **not** grant `roles/secretmanager.secretAccessor` — use the `single_secret` module (which owns each secret) to grant access by passing `output.service_account_email` to it.
+- **Service account is required and must be created externally.** This module does not create an SA. Pass its email via `service_account_email` and grant it permissions (e.g. `roles/secretmanager.secretAccessor`) via the modules that own those resources.
+- **Secrets must exist before `terraform apply`**, and IAM access must be granted separately. This module does **not** grant `roles/secretmanager.secretAccessor` — use the `single_secret` module (which owns each secret) to grant access.
 - **CORS is enforced by your function code**, not by GCP infrastructure. The `ALLOWED_ORIGINS` env var is a convention; make sure your function reads it and sets the appropriate response headers.
