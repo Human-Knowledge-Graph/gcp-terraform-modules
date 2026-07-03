@@ -2,6 +2,12 @@ locals {
   service_account_id = var.service_account_id != "" ? var.service_account_id : "${var.function_name}-sa"
   source_bucket      = var.create_source_bucket ? google_storage_bucket.source[0].name : var.source_bucket_name
 
+  placeholder_source = {
+    "python" = "def ${var.entry_point}(request):\n    return 'OK', 200\n"
+    "nodejs" = "exports.${var.entry_point} = (req, res) => res.send('OK');\n"
+  }
+  runtime_family = regex("^([a-z]+)", var.runtime)[0]
+
   # CORS and rate-limit config passed as env vars; the function code is responsible for acting on them
   framework_env_vars = {
     ALLOWED_ORIGINS           = join(",", var.allowed_origins)
@@ -43,6 +49,38 @@ resource "google_storage_bucket" "source" {
 
   versioning {
     enabled = true
+  }
+}
+
+# ── Placeholder Source ZIP ────────────────────────────────────────────────────
+#
+# When this module creates the bucket it also needs a valid ZIP in place before
+# the function can be deployed. archive_file generates a minimal stub locally;
+# google_storage_bucket_object uploads it on first apply.
+#
+# The lifecycle ignore_changes ensures that once real code is pushed (via
+# gcloud functions deploy or CI), Terraform never overwrites it on subsequent
+# applies. The same ignore_changes on the function's build_config[0].source
+# means the function itself also won't revert to the placeholder.
+
+data "archive_file" "placeholder" {
+  type        = "zip"
+  output_path = "/tmp/${var.function_name}-placeholder.zip"
+
+  source {
+    content  = lookup(local.placeholder_source, local.runtime_family, "exports.${var.entry_point} = (req, res) => res.send('OK');\n")
+    filename = local.runtime_family == "python" ? "main.py" : "index.js"
+  }
+}
+
+resource "google_storage_bucket_object" "placeholder_source" {
+  count  = var.create_source_bucket ? 1 : 0
+  name   = var.source_object_name
+  bucket = local.source_bucket
+  source = data.archive_file.placeholder.output_path
+
+  lifecycle {
+    ignore_changes = [source, detect_md5hash]
   }
 }
 
@@ -133,6 +171,8 @@ resource "google_cloudfunctions2_function" "function" {
       build_config[0].source,
     ]
   }
+
+  depends_on = [google_storage_bucket_object.placeholder_source]
 }
 
 # ── IAM: Public Invocation ────────────────────────────────────────────────────
