@@ -35,6 +35,10 @@ This repository contains production-ready Terraform modules designed to simplify
 
 - **[monitoring_metrics_scope](./modules/monitoring_metrics_scope)** - Configure Cloud Monitoring metrics scopes for cross-project visibility
 
+### Observability
+
+- **[observability/cloudtask/log_based_metrics/high_retry_tasks](./modules/observability/cloudtask/log_based_metrics/high_retry_tasks)** - Log-based metric that counts Cloud Tasks attempts where `dispatchCount >= threshold`, with label extraction for task, target, and status. Includes Terraform unit tests.
+
 ## Usage
 
 ### Using Modules in Your Infrastructure Code
