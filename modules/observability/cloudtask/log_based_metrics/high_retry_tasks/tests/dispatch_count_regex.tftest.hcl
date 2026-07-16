@@ -1,8 +1,11 @@
 # Tests for the dispatch_count_regex local.
 #
-# All runs use command = plan so no GCP credentials are required.
+# mock_provider stubs the Google provider so no GCP credentials are needed —
+# this runs safely in CI without any service account configuration.
 # Assertions use can(regex(pattern, value)) — can() returns false when
 # regex() finds no match instead of propagating the error.
+
+mock_provider "google" {}
 
 variables {
   project_id = "fake-project"
