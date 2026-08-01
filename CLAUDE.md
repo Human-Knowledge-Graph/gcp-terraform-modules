@@ -45,6 +45,12 @@ terraform fmt -check -recursive
 
 # Validate all modules
 find . -type f -name "*.tf" -exec dirname {} \; | sort -u | xargs -I {} sh -c 'cd {} && terraform init -backend=false && terraform validate'
+
+# Run terraform test for every module that has tests, anywhere in the repo
+# (matches the discovery logic in .github/workflows/ci.yml, including nested
+# module paths like modules/observability/*/* that `make validate`/`make docs`
+# do not reach)
+./scripts/test-all-modules.sh
 ```
 
 ## Module Development Guidelines

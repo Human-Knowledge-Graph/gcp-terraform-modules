@@ -30,26 +30,5 @@ jobs:
         with:
           terraform_version: "~1.9"
 
-      - name: Find modules with tests
-        id: find
-        run: |
-          DIRS=$(find . -path "*/tests/*.tftest.hcl" \
-                        -not -path "*/.terraform/*" \
-                 | sed 's|/tests/[^/]*$||' \
-                 | sort -u \
-                 | tr '\n' ' ')
-          echo "dirs=$DIRS" >> "$GITHUB_OUTPUT"
-
-      - name: Run terraform test for each module
-        run: |
-          set -e
-          DIRS="${{ steps.find.outputs.dirs }}"
-          if [ -z "$DIRS" ]; then
-            echo "No modules with tests found — skipping."
-            exit 0
-          fi
-          for dir in $DIRS; do
-            echo "::group::$dir"
-            (cd "$dir" && terraform init -backend=false && terraform test)
-            echo "::endgroup::"
-          done
+      - name: Run terraform test for every module
+        run: ./scripts/test-all-modules.sh
