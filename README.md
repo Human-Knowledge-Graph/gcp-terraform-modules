@@ -31,6 +31,10 @@ This repository contains production-ready Terraform modules designed to simplify
 
 - **[single_secret](./modules/single_secret)** - Create Secret Manager secret with IAM access permissions
 
+### CI/CD
+
+- **[github_actions_wic](./modules/github_actions_wic)** - Workload Identity Federation for keyless GitHub Actions -> GCP authentication (no service account JSON keys)
+
 ### Monitoring
 
 - **[monitoring_metrics_scope](./modules/monitoring_metrics_scope)** - Configure Cloud Monitoring metrics scopes for cross-project visibility
