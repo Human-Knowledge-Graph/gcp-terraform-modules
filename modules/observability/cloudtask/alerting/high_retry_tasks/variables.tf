@@ -39,4 +39,9 @@ variable "auto_close" {
   description = "Duration after which an open incident auto-closes if no new violating data arrives. In per_task mode this is what prevents renotifying for the same task while it keeps retrying with gaps (e.g. \"86400s\" for once per 24h)."
   type        = string
   default     = "86400s"
+
+  validation {
+    condition     = can(regex("^[0-9]+(\\.[0-9]+)?s$", var.auto_close))
+    error_message = "auto_close must be a Cloud Monitoring duration string in seconds, e.g. \"86400s\"."
+  }
 }

@@ -6,9 +6,9 @@
 mock_provider "google" {}
 
 variables {
-  project_id             = "fake-project"
-  queue_id               = "fake-queue"
-  notification_channels  = ["projects/fake-project/notificationChannels/1"]
+  project_id            = "fake-project"
+  queue_id              = "fake-queue"
+  notification_channels = ["projects/fake-project/notificationChannels/1"]
 }
 
 # ── defaults ──────────────────────────────────────────────────────────────────
@@ -102,7 +102,7 @@ run "custom_threshold_and_duration" {
 
   variables {
     depth_threshold = 500
-    duration         = "3600s"
+    duration        = "3600s"
   }
 
   assert {
@@ -119,4 +119,30 @@ run "custom_threshold_and_duration" {
     condition     = strcontains(google_monitoring_alert_policy.queue_depth.display_name, "500")
     error_message = "display_name must reflect the custom threshold"
   }
+}
+
+# ── duration format validation ───────────────────────────────────────────────
+
+run "invalid_duration_rejected" {
+  command = plan
+
+  variables { duration = "7200" }
+
+  expect_failures = [var.duration]
+}
+
+run "invalid_alignment_period_rejected" {
+  command = plan
+
+  variables { alignment_period = "5m" }
+
+  expect_failures = [var.alignment_period]
+}
+
+run "invalid_auto_close_rejected" {
+  command = plan
+
+  variables { auto_close = "1d" }
+
+  expect_failures = [var.auto_close]
 }

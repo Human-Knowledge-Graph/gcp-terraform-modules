@@ -63,6 +63,14 @@ run "invalid_grouping_rejected" {
   expect_failures = [var.notification_grouping]
 }
 
+run "invalid_auto_close_rejected" {
+  command = plan
+
+  variables { auto_close = "1d" }
+
+  expect_failures = [var.auto_close]
+}
+
 # ── defaults and display content ─────────────────────────────────────────────
 
 run "defaults_and_display_name" {

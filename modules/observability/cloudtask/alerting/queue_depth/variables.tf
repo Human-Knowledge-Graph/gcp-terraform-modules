@@ -24,12 +24,22 @@ variable "duration" {
   description = "How long queue depth must stay above depth_threshold, continuously, before the alert fires (Cloud Monitoring duration string, e.g. \"7200s\" for 2 hours)"
   type        = string
   default     = "7200s"
+
+  validation {
+    condition     = can(regex("^[0-9]+(\\.[0-9]+)?s$", var.duration))
+    error_message = "duration must be a Cloud Monitoring duration string in seconds, e.g. \"7200s\"."
+  }
 }
 
 variable "alignment_period" {
   description = "Alignment period for sampling queue depth before comparing against depth_threshold (Cloud Monitoring duration string). Used with ALIGN_MAX, so the max depth observed within each period is what gets compared against the threshold."
   type        = string
   default     = "300s"
+
+  validation {
+    condition     = can(regex("^[0-9]+(\\.[0-9]+)?s$", var.alignment_period))
+    error_message = "alignment_period must be a Cloud Monitoring duration string in seconds, e.g. \"300s\"."
+  }
 }
 
 variable "notification_channels" {
@@ -41,4 +51,9 @@ variable "auto_close" {
   description = "Duration after which an open incident auto-closes if no new data arrives for the queue depth metric (e.g. \"86400s\" for 24h)"
   type        = string
   default     = "86400s"
+
+  validation {
+    condition     = can(regex("^[0-9]+(\\.[0-9]+)?s$", var.auto_close))
+    error_message = "auto_close must be a Cloud Monitoring duration string in seconds, e.g. \"86400s\"."
+  }
 }
