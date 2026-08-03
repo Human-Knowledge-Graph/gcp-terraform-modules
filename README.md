@@ -43,12 +43,14 @@ This repository contains production-ready Terraform modules designed to simplify
 
 - **[observability/cloudtask/log_based_metrics/high_retry_tasks](./modules/observability/cloudtask/log_based_metrics/high_retry_tasks)** - Log-based metric that counts Cloud Tasks attempts where `dispatchCount >= threshold`, with label extraction for task, target, and status. Includes Terraform unit tests.
 - **[observability/cloudtask/alerting/high_retry_tasks](./modules/observability/cloudtask/alerting/high_retry_tasks)** - Alert policy for the high-retry-tasks log-based metric above, notifying per individual `task_id` or aggregated per queue, with externally-supplied notification channels. Includes Terraform unit tests.
+- **[observability/cloudtask/alerting/queue_depth](./modules/observability/cloudtask/alerting/queue_depth)** - Alert policy on the built-in `cloudtasks.googleapis.com/queue/depth` metric, firing when queue depth stays above a threshold continuously for a configured duration. No paired log-based metric needed. Includes Terraform unit tests.
 
 ## Examples
 
 End-to-end examples showing how multiple modules compose together live under [`examples/`](./examples):
 
 - **[cloudtask_high_retry_alerting](./examples/cloudtask_high_retry_alerting)** - Wires the Cloud Tasks log-based metric module, an email notification channel, and the Cloud Tasks alerting module together to alert on tasks with high retry counts.
+- **[cloudtask_queue_depth_alerting](./examples/cloudtask_queue_depth_alerting)** - Wires an email notification channel and the queue depth alerting module together to alert when a queue's depth stays elevated for a sustained period.
 
 ## Usage
 
